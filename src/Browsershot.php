@@ -250,6 +250,8 @@ class Browsershot
 
     public function setUrl(string $url)
     {
+        $url = trim($url);
+
         if (Helpers::stringStartsWith(strtolower($url), 'file://')) {
             throw FileUrlNotAllowed::make();
         }
