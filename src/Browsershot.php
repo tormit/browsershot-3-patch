@@ -252,8 +252,11 @@ class Browsershot
     {
         $url = trim($url);
 
-        if (Helpers::stringStartsWith(strtolower($url), 'file://')) {
-            throw FileUrlNotAllowed::make();
+        $unsupportedProtocols = ['file://', 'file:/', 'file:\\', 'file:\\\\'];
+        foreach ($unsupportedProtocols as $unsupportedProtocol) {
+            if (str_starts_with(strtolower($url), $unsupportedProtocol)) {
+                throw FileUrlNotAllowed::make();
+            }
         }
 
         $this->url = $url;
